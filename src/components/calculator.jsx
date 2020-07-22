@@ -34,6 +34,7 @@ function Calculator() {
     if(currentCalculation.includes("="))
       submit();
   }, [currentCalculation]);
+  
 const calculate = (num1, operator, num2) => {
   if(operator === 'add'){
     console.log("entered1");
