@@ -30,53 +30,50 @@ function Calculator() {
   
   const classes = useStyles();
   
-  // useEffect(() => {
-    
-  // }
+  useEffect(() => {
+    if(currentCalculation.includes("="))
+      submit();
+  }, [currentCalculation]);
 const calculate = (num1, operator, num2) => {
   if(operator === 'add'){
     console.log("entered1");
-      // addToCurrentCalculation(num1, '+', num2);
-      setCurrentCalculation(oldCalcs => [...oldCalcs, num1, "+", num2]);
+      addToCurrentCalculation(num1, '+', num2);
+      // setCurrentCalculation(oldCalcs => [...oldCalcs, num1, "+", num2]);
       return parseFloat(num1) + parseFloat(num2)
   } else if ( operator === 'subtract') {
     console.log("entered2");
-
-    // addToCurrentCalculation(num1, '-', num2);
+    addToCurrentCalculation(num1, '-', num2);
     return parseFloat(num1) - parseFloat(num2)
   } else if ( operator === 'multiply') {
     console.log("entered3");
-
-    // addToCurrentCalculation(num1, 'x', num2);
+    addToCurrentCalculation(num1, 'x', num2);
     return parseFloat(num1) * parseFloat(num2);
   } else {
     console.log("entered3");
-    // addToCurrentCalculation(num1, '/', num2);
+    addToCurrentCalculation(num1, '/', num2);
     return parseFloat(num1) / parseFloat(num2);
   
   }
 }
 
-// const addToCurrentCalculation = (num1, operator, num2) => {
-//   console.log("addToCurrentCalculation " + num1 + operator + num2);
-//   var isFirstExpression = currentCalculation.length === 0;
+const addToCurrentCalculation = (num1, operator, num2) => {
+  console.log("addToCurrentCalculation " + num1 + operator + num2);
+  var isFirstExpression = currentCalculation.length === 0;
 
-//   // setCurrentCalculation([...currentCalculation, num1, operator, num2]);
+  // setCurrentCalculation([...currentCalculation, num1, operator, num2]);
 
-//   if(isFirstExpression){
-//     console.log("isFirstExpression")
+  if(isFirstExpression){
+    console.log("isFirstExpression")
     
-//     // let values = [num1, operator, num2]
-//      setCurrentCalculation(oldCalculation => ([ num1, operator, num2]));
+    setCurrentCalculation(oldCalculation => ([ ...oldCalculation, num1, operator, num2]));
   
-    
-//     console.log("currentCalculation" + JSON.stringify(currentCalculation));
-//   } else {
-//     console.log("!isFirstExpression");
-//     setCurrentCalculation(oldCalculation => ([...oldCalculation, operator, num2]));
-//     console.log("currentCalculation" + JSON.stringify(currentCalculation));
-//   }
-//   }
+    console.log("currentCalculation" + JSON.stringify(currentCalculation));
+  } else {
+    console.log("isFirstExpression");
+    setCurrentCalculation(oldCalculation => ([...oldCalculation, operator, num2]));
+    console.log("currentCalculation" + JSON.stringify(currentCalculation));
+  }
+  }
 
 const submit = () => {
   console.log("SUBMIT CALLED");
@@ -90,7 +87,7 @@ const submit = () => {
       })
       .then(docRef => {
         console.log("Document added with ID:" + docRef.id);
-        // setCurrentCalculation([]);
+        setCurrentCalculation([]);
       })  
     .catch(error => {
       console.error("Error adding document to database: " + error);
@@ -146,7 +143,7 @@ const handleClick = (event) => {
 }
 
   if(action === 'calculate') {
-    // var result = '';
+  //   var result = '';
     
   //   if(firstValue) {
   //     if(previousKey === 'calculate') setFirstValue(display);
@@ -169,11 +166,11 @@ const handleClick = (event) => {
       setFirstValue(display);
     }
     let result = calculate(firstValue, operator, display);
-    // addToCurrentCalculation(null, "=", result);
-    setCurrentCalculation(oldCalcs => [...oldCalcs, null, "=", result]);
+    addToCurrentCalculation(null, "=", result);
+    // setCurrentCalculation(oldCalcs => [...oldCalcs, null, "=", result]);
     setDisplay(result);
     console.log("currentCalculation " + JSON.stringify(currentCalculation));
-    submit();
+    // submit();
     // setCurrentCalculation([]);
   }
 
