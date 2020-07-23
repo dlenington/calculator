@@ -1,12 +1,10 @@
 import React, { useState, Fragment, useEffect } from 'react';
-import Typography from "@material-ui/core/Typography";
+import { db } from '../services/firebase';
+
+//MUI Imports
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import { db } from '../services/firebase';
-
-import blue from '@material-ui/core/colors/blue';
-import orange from '@material-ui/core/colors/orange';
 import { makeStyles } from '@material-ui/core';
 
 
@@ -21,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
 
 
 function Calculator() {
-  
   const [currentCalculation, setCurrentCalculation] = useState([]);
   const [display, setDisplay] = useState('');
   const [previousKey, setPreviousKey] = useState('');
@@ -34,50 +31,38 @@ function Calculator() {
     if(currentCalculation.includes("="))
       submit();
   }, [currentCalculation]);
-  
+
 const calculate = (num1, operator, num2) => {
   if(operator === 'add'){
-    console.log("entered1");
       addToCurrentCalculation(num1, '+', num2);
-      // setCurrentCalculation(oldCalcs => [...oldCalcs, num1, "+", num2]);
+      
       return parseFloat(num1) + parseFloat(num2)
   } else if ( operator === 'subtract') {
-    console.log("entered2");
     addToCurrentCalculation(num1, '-', num2);
+
     return parseFloat(num1) - parseFloat(num2)
   } else if ( operator === 'multiply') {
-    console.log("entered3");
     addToCurrentCalculation(num1, 'x', num2);
+
     return parseFloat(num1) * parseFloat(num2);
   } else {
-    console.log("entered3");
     addToCurrentCalculation(num1, '/', num2);
+
     return parseFloat(num1) / parseFloat(num2);
-  
   }
 }
 
 const addToCurrentCalculation = (num1, operator, num2) => {
-  console.log("addToCurrentCalculation " + num1 + operator + num2);
   var isFirstExpression = currentCalculation.length === 0;
 
-  // setCurrentCalculation([...currentCalculation, num1, operator, num2]);
-
   if(isFirstExpression){
-    console.log("isFirstExpression")
-    
     setCurrentCalculation(oldCalculation => ([ ...oldCalculation, num1, operator, num2]));
-  
-    console.log("currentCalculation" + JSON.stringify(currentCalculation));
   } else {
-    console.log("isFirstExpression");
     setCurrentCalculation(oldCalculation => ([...oldCalculation, operator, num2]));
-    console.log("currentCalculation" + JSON.stringify(currentCalculation));
   }
   }
 
 const submit = () => {
-  console.log("SUBMIT CALLED");
   if(currentCalculation.length === 0)
   return;
 
@@ -144,35 +129,13 @@ const handleClick = (event) => {
 }
 
   if(action === 'calculate') {
-  //   var result = '';
-    
-  //   if(firstValue) {
-  //     if(previousKey === 'calculate') setFirstValue(display);
-  //  console.log("entered1");
-  //     result = calculate(firstValue, operator, display);
-  //     setDisplay(result);
-  //     addToCurrentCalculation(null, "=", result);
-  //     // submit();
-  //     setFirstValue(display); 
-      
-  //   } else {
-  //     console.log("entered2");
-  //     result = calculate(firstValue, operator, display);
-  //     addToCurrentCalculation(null, "=", result);
-  //     // submit();
-  //     setDisplay(result);
-  //   }
   if(firstValue) {
     if(previousKey === 'calculate') {
       setFirstValue(display);
     }
     let result = calculate(firstValue, operator, display);
     addToCurrentCalculation(null, "=", result);
-    // setCurrentCalculation(oldCalcs => [...oldCalcs, null, "=", result]);
     setDisplay(result);
-    console.log("currentCalculation " + JSON.stringify(currentCalculation));
-    // submit();
-    // setCurrentCalculation([]);
   }
 
     setPreviousKey('calculate');
@@ -181,9 +144,8 @@ const handleClick = (event) => {
 
   return ( 
     <Fragment>
-    <TextField className={classes.displayField} value={display}>
-    
-    </TextField>
+    <TextField className={classes.displayField} value={display}/>
+  
     <Grid class="calc-keys">
       <Grid item> 
       <Button className={classes.button} data-action="add" onClick={handleClick} variant="contained" color="secondary">+</Button>

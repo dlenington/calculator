@@ -49,14 +49,24 @@ useEffect(() => {
 return (
   <ThemeProvider theme={theme}>
     <Fragment>
-      <Typography className={classes.title} variant="h2">Calculate</Typography>
+
+      <Grid container justify="center">
+        <Typography className={classes.title} variant="h2">Calculate</Typography>
+      </Grid>
+
       <Grid container spacing={2}>
+        <Grid item sm/>
+        <Grid item sm><Calculator/></Grid>
+        <Grid item sm/>
+      </Grid>
+      <Grid container spacing={2}>
+        <Grid item sm/>
         <Grid item sm> 
         {calculations.map(calc => (
         <Result calc={calc}/>
         ))}
           </Grid>
-        <Grid item sm><Calculator/></Grid>
+        <Grid item sm/>
       </Grid>
     </Fragment>
     </ThemeProvider>
