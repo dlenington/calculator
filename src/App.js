@@ -49,11 +49,9 @@ useEffect(() => {
 return (
   <ThemeProvider theme={theme}>
     <Fragment>
-
       <Grid container justify="center">
         <Typography className={classes.title} variant="h2">Calculate</Typography>
       </Grid>
-
       <Grid container spacing={2}>
         <Grid item sm/>
         <Grid item sm><Calculator/></Grid>
