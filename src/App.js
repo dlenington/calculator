@@ -27,6 +27,7 @@ const [calculations, setCalculations] = useState([]);
 const classes = useStyles();
 
 useEffect(() => {
+  console.log("useEffect called");
   async function getCalculations() {
     try{
     db.collection("calculations").orderBy('createdAt', 'desc').limit(10)
@@ -43,7 +44,7 @@ useEffect(() => {
 }
 
   getCalculations();
-}, [calculations]);
+}, []);
 
 
 return (
